@@ -63,18 +63,16 @@ public class Clientes {
 	public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede modificar un cliente nulo.");
-		} else if (nombre == null) {
-			throw new NullPointerException("ERROR nombreqq NO");
-		} else if (telefono == null) {
-			throw new NullPointerException("ERROR telefonoE NO");
+		
+		
 		} else if (coleccionClientes.contains(cliente)) {
 			Cliente clienteNuevo = new Cliente(cliente);
 			int index = coleccionClientes.indexOf(cliente);
-			if (cliente.getNombre() != null || !cliente.getNombre().trim().isEmpty()) {
-				clienteNuevo.setNombre(nombre);
+			if (nombre != null) {
+				coleccionClientes.get(index).setNombre(nombre);
 			}
-			if (cliente.getTelefono() != null || !cliente.getTelefono().trim().isEmpty()) {
-				clienteNuevo.setTelefono(telefono);
+			if (telefono != null) {
+				coleccionClientes.get(index).setTelefono(telefono);
 			}
 			coleccionClientes.set(index, clienteNuevo);
 		} else {
