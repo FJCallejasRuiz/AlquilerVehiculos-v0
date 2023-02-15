@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit;
 import javax.naming.OperationNotSupportedException;
 
 public class Alquiler {
-	public static DateTimeFormatter FORMATO_FECHA= DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	public static DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private final int PRECIO_DIA = 20;
 	private LocalDate fechaAlquiler, fechaDevolucion;
 	private Cliente cliente;
@@ -137,9 +137,13 @@ public class Alquiler {
 
 	@Override
 	public String toString() {
-			return "Alquiler [fechaAlquiler=" + fechaAlquiler + ", fechaDevolucion=" + fechaDevolucion + ", cliente="
-					+ cliente + ", turismo=" + turismo + "]";
+		if (fechaDevolucion == null) {
+			return cliente+" <---> " + turismo + ", " + fechaAlquiler.format(FORMATO_FECHA)+ " - Aún no devuelto"+" ("+this.getPrecio()+"€)";
+		}else {
+			return cliente+" <---> " + turismo + ", " + fechaAlquiler.format(FORMATO_FECHA)+" - "+ fechaDevolucion.format(FORMATO_FECHA)+" ("+this.getPrecio()+"€)";
 		}
-	
+			
+		
 	}
 
+}

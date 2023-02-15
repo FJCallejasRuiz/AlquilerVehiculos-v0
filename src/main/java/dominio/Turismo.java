@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Turismo {
 	private final String ER_MARCA = "([A-Z][a-zA-Z]+)([\s][A-Z][a-z]+)*([-][A-Z][a-z]+)*([A-Z][a-z]+)*";
-	private final String ER_MATRICULA = "([0-9]{4})([A-Z]{3})";
+	private final String ER_MATRICULA = "([0-9]{4})([BCDFGHJKLMNPRSTVWXYZ]{3})";
 	private String marca, modelo, matricula;
 	private int cilindrada;
 
