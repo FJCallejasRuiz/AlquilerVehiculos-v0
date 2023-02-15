@@ -14,7 +14,7 @@ public class Turismos {
 	public Turismos() {
 		coleccionTurismos = new ArrayList<Turismo>();
 	}
-	
+
 	public List<Turismo> get() {
 
 		List<Turismo> coleccionTemporal = new ArrayList<Turismo>();
@@ -29,7 +29,7 @@ public class Turismos {
 
 		return cantidad;
 	}
-	
+
 	public void insertar(Turismo turismo) throws OperationNotSupportedException {
 		if (turismo == null) {
 			throw new NullPointerException("ERROR: No se puede insertar un turismo nulo.");
@@ -39,7 +39,7 @@ public class Turismos {
 			throw new OperationNotSupportedException("ERROR: Ya existe un turismo con esa matrícula.");
 		}
 	}
-	
+
 	public Turismo buscar(Turismo turismo) {
 
 		if (turismo == null) {
@@ -50,7 +50,7 @@ public class Turismos {
 			return null;
 		}
 	}
-	
+
 	public void borrar(Turismo turismo) throws OperationNotSupportedException {
 		if (turismo == null) {
 			throw new NullPointerException("ERROR: No se puede borrar un turismo nulo.");
@@ -60,5 +60,5 @@ public class Turismos {
 			throw new OperationNotSupportedException("ERROR: No existe ningún turismo con esa matrícula.");
 		}
 	}
-	
+
 }

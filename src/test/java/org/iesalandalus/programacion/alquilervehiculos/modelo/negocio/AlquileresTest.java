@@ -14,9 +14,11 @@ import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import dominio.Alquiler;
+import dominio.Cliente;
+import dominio.Turismo;
+import negocio.Alquileres;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
