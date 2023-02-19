@@ -14,7 +14,7 @@ public enum Opcion {
 		this.texto = texto;
 	}
 
-	private boolean esOrdinalValido(int ordinal) {
+	private static boolean esOrdinalValido(int ordinal) {
 
 		if (ordinal < 0 || ordinal > 16) {
 			return false;
@@ -23,7 +23,7 @@ public enum Opcion {
 		}
 	}
 
-	public Opcion get(int ordinal) {
+	public static Opcion get(int ordinal) {
 
 		if (esOrdinalValido(ordinal)) {
 			switch (ordinal) {
