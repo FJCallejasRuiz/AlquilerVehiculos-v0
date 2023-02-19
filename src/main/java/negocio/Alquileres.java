@@ -85,7 +85,7 @@ public class Alquileres {
 			throw new NullPointerException("ERROR: No se puede devolver un alquiler nulo.");
 		}
 		if (fechaDevolucion == null) {
-			throw new NullPointerException("ERROR: No se puede i.");
+			throw new NullPointerException("ERROR: No se puede devolver una fecha de devolución nula.");
 		}
 
 		int index = coleccionAlquileres.indexOf(alquiler);
