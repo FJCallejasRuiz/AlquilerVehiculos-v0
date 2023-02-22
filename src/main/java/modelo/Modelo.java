@@ -41,15 +41,18 @@ public class Modelo {
 
 	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
 
-		// int i = this.clientes.get().indexOf(alquiler.getCliente());
-		// int j = this.turismos.get().indexOf(alquiler.getTurismo());
+		if (alquiler == null) {
+			throw new NullPointerException("ERROR: No se puede realizar un alquiler nulo.");
+		}
 		Cliente clienteTemporal = clientes.buscar(alquiler.getCliente());
 		Turismo turismoTemporal = turismos.buscar(alquiler.getTurismo());
-		if (clienteTemporal != null && turismoTemporal != null) {
+		if (clienteTemporal == null) {
+			throw new OperationNotSupportedException("ERROR: No existe el cliente del alquiler.");
+		} else if (turismoTemporal == null) {
+			throw new OperationNotSupportedException("ERROR: No existe el turismo del alquiler.");
+		} else {
 			Alquiler alquilerTemporal = new Alquiler(clienteTemporal, turismoTemporal, alquiler.getFechaAlquiler());
 			this.alquileres.insertar(alquilerTemporal);
-		} else {
-			throw new OperationNotSupportedException("ERROR: El alquiler putas.");
 		}
 	}
 
@@ -73,9 +76,16 @@ public class Modelo {
 	}
 
 	public void devolver(Alquiler alquiler, LocalDate fechadevolucion) throws OperationNotSupportedException {
-		this.alquileres.buscar(alquiler);
-		alquiler.devolver(fechadevolucion);
-		this.alquileres.devolver(alquiler, fechadevolucion);
+		if (alquiler == null) {
+			throw new NullPointerException("ERROR: No se puede realizar un alquiler nulo.");
+		}
+		if (fechadevolucion == null) {
+			throw new NullPointerException("ERROR: No se puede realizar una devolución nula.");
+		}
+		if (this.alquileres.buscar(alquiler) == null) {
+			throw new OperationNotSupportedException("ERROR: No existe el alquiler a devolver.");
+		} else
+			alquiler.devolver(fechadevolucion);
 	}
 
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
