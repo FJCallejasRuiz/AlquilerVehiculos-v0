@@ -31,6 +31,7 @@ public class Vista {
 
 	public void terminar() {
 		System.out.println("El gestor de alquiler ha finalizado.");
+		System.exit(0);
 	}
 
 	private void ejecutar(Opcion opcion) {
