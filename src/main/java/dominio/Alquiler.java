@@ -137,10 +137,11 @@ public class Alquiler {
 
 	@Override
 	public String toString() {
-		if (fechaDevolucion == null) {
-			return cliente+" <---> " + turismo + ", " + fechaAlquiler.format(FORMATO_FECHA)+ " - Aún no devuelto"+" ("+this.getPrecio()+"€)";
-		}else {
+		if (fechaDevolucion != null) {
 			return cliente+" <---> " + turismo + ", " + fechaAlquiler.format(FORMATO_FECHA)+" - "+ fechaDevolucion.format(FORMATO_FECHA)+" ("+this.getPrecio()+"€)";
+
+		}else {
+			return cliente+" <---> " + turismo + ", " + fechaAlquiler.format(FORMATO_FECHA)+ " - Aún no devuelto"+" ("+this.getPrecio()+"€)";
 		}
 			
 		

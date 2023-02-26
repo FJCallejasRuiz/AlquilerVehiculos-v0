@@ -1,5 +1,7 @@
 package vista;
 
+import java.time.format.DateTimeParseException;
+
 import javax.naming.OperationNotSupportedException;
 
 import controlador.Controlador;
@@ -131,7 +133,7 @@ public class Vista {
 	private void buscarCliente() {
 		Consola.mostrarCabecera("Eligió buscar un cliente.");
 		try {
-			if (controlador.buscar(Consola.leerCliente()) == null) {
+			if (controlador.buscar(Consola.leerClienteDni()) == null) {
 				System.out.println("El cliente no se encuentra en la base de datos.");
 			} else {
 				System.out.println("El cliente se encuentra en la base de datos.");
@@ -147,7 +149,7 @@ public class Vista {
 	private void buscarTurismo() {
 		Consola.mostrarCabecera("Eligió buscar un turismo.");
 		try {
-			if (controlador.buscar(Consola.leerTurismo()) == null) {
+			if (controlador.buscar(Consola.leerTurismoMatricula()) == null) {
 				System.out.println("El turismo no se encuentra en la base de datos.");
 			} else {
 				System.out.println("El turismo se encuentra en la base de datos.");
@@ -171,13 +173,15 @@ public class Vista {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
+		} catch (DateTimeParseException e) {
+			System.out.println("La fecha no es así.");
 		}
 	}
 
 	private void modificarCliente() {
 		Consola.mostrarCabecera("Eligió modificar un cliente.");
 		try {
-			controlador.modificar(controlador.buscar(Consola.leerCliente()), Consola.leerNombre(),
+			controlador.modificar(controlador.buscar(Consola.leerClienteDni()), Consola.leerNombre(),
 					Consola.leerTelefono());
 		} catch (OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
@@ -198,13 +202,15 @@ public class Vista {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
+		} catch (DateTimeParseException e) {
+			System.out.println("La fecha no es así.");
 		}
 	}
 
 	private void borrarCliente() {
 		Consola.mostrarCabecera("Eligió borrar un cliente.");
 		try {
-			controlador.borrar(controlador.buscar(Consola.leerCliente()));
+			controlador.borrar(controlador.buscar(Consola.leerClienteDni()));
 		} catch (OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		} catch (NullPointerException e) {
@@ -217,7 +223,7 @@ public class Vista {
 	private void borrarTurismo() {
 		Consola.mostrarCabecera("Eligió borrar un turismo.");
 		try {
-			controlador.borrar(controlador.buscar(Consola.leerTurismo()));
+			controlador.borrar(controlador.buscar(Consola.leerTurismoMatricula()));
 		} catch (OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		} catch (NullPointerException e) {
@@ -237,6 +243,8 @@ public class Vista {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
+		} catch (DateTimeParseException e) {
+			System.out.println("La fecha no es así.");
 		}
 	}
 
@@ -264,14 +272,14 @@ public class Vista {
 
 	private void listarAlquileresCliente() {
 		Consola.mostrarCabecera("Eligió listar los alquileres de un cliente.");
-		for (Alquiler alquiler : controlador.getAlquileres(Consola.leerCliente())) {
+		for (Alquiler alquiler : controlador.getAlquileres(Consola.leerClienteDni())) {
 			System.out.println(alquiler);
 		}
 	}
 
 	private void listarAlquileresTurismo() {
 		Consola.mostrarCabecera("Eligió listar los alquileres de un turismo.");
-		for (Alquiler alquiler : controlador.getAlquileres(Consola.leerTurismo())) {
+		for (Alquiler alquiler : controlador.getAlquileres(Consola.leerTurismoMatricula())) {
 			System.out.println(alquiler);
 		}
 	}

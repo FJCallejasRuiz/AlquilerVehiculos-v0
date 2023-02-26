@@ -90,17 +90,18 @@ public class Modelo {
 
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
 		for (Alquiler alquiler : this.alquileres.get(cliente)) {
-			this.alquileres.borrar(alquiler);
-			this.clientes.borrar(cliente);
+			alquileres.borrar(alquiler);
 		}
+		this.clientes.borrar(cliente);
 	}
 
 	public void borrar(Turismo turismo) throws OperationNotSupportedException {
 
 		for (Alquiler alquiler : this.alquileres.get(turismo)) {
-			this.alquileres.borrar(alquiler);
-			this.turismos.borrar(turismo);
+			alquileres.borrar(alquiler);
+			
 		}
+		this.turismos.borrar(turismo);
 	}
 
 	public void borrar(Alquiler alquiler) throws OperationNotSupportedException {

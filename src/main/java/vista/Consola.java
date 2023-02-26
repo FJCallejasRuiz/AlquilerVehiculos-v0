@@ -22,6 +22,7 @@ public class Consola {
 		for (int i = 0; i <= longitud; i++) {
 			System.out.print("-");
 		}
+		System.out.println("");
 	}
 
 	public static void mostrarMenu() {
@@ -44,7 +45,7 @@ public class Consola {
 		System.out.println("------------------------");
 		System.out.println("10. Borrar un cliente.");
 		System.out.println("11. Borrar un turismo.");
-		System.out.println("12. Borrar un alquiler");
+		System.out.println("12. Borrar un alquiler.");
 		System.out.println("------------------------");
 		System.out.println("13  Listar los clientes.");
 		System.out.println("14. Listar los turismos.");
@@ -52,6 +53,7 @@ public class Consola {
 		System.out.println("------------------------");
 		System.out.println("16. Listar los alquileres de un cliente.");
 		System.out.println("17  Listar los alquileres de un turismo.");
+		System.out.println("------------------------");
 	}
 
 	private static String leerCadena(String mensaje) {
@@ -99,7 +101,7 @@ public class Consola {
 	public static Cliente leerClienteDni() {
 		String dni = "Introduzca el dni del cliente.";
 		String dniFormado = leerCadena(dni);
-		Cliente clienteFormado = new Cliente(leerNombre(), dniFormado, "693310060");
+		Cliente clienteFormado = new Cliente("Bob Esponja", dniFormado, "123456789");
 		return clienteFormado;
 	}
 
@@ -116,10 +118,10 @@ public class Consola {
 	}
 
 	public static Turismo leerTurismo() {
-		String marca = "Introduzca el dni del cliente.";
-		String modelo = "Introduzca el dni del cliente.";
-		String cilindrada = "Introduzca la cilindrada del cliente";
-		String matricula = "Introduzca el dni del cliente.";
+		String marca = "Introduzca la marca del turismo.";
+		String modelo = "Introduzca el modelo del turismo.";
+		String cilindrada = "Introduzca la cilindrada del turismo.";
+		String matricula = "Introduzca la matrícula del turismo.";
 
 		String marcaFormada = leerCadena(marca);
 		String modeloFormado = leerCadena(modelo);
@@ -131,7 +133,7 @@ public class Consola {
 	}
 
 	public static Turismo leerTurismoMatricula() {
-		String matricula = "Introduzca el dni del cliente.";
+		String matricula = "Introduzca la matrícula del turismo.";
 		String matriculaFormada = leerCadena(matricula);
 		Turismo turismoFormado = new Turismo("BMW", "A", 500, matriculaFormada);
 		return turismoFormado;
@@ -139,8 +141,8 @@ public class Consola {
 
 
 	public static Alquiler leerAlquiler() {
-		Cliente clienteTemp = leerClienteDni();
-		Turismo turismoTemp = leerTurismoMatricula();
+		Cliente clienteTemp = leerCliente();
+		Turismo turismoTemp = leerTurismo();
 		String fecha = "introduzca la fecha de alquiler.";
 		LocalDate fechaTemp = leerFecha(fecha);
 
