@@ -12,9 +12,12 @@ public class Vehiculos implements IVehiculos {
 
 	List<Vehiculo> coleccionVehiculos;
 
+
 	public Vehiculos() {
 		coleccionVehiculos = new ArrayList<Vehiculo>();
 	}
+	
+
 
 	@Override
 	public List<Vehiculo> get() {

@@ -59,9 +59,7 @@ public abstract class Vehiculo {
 	}
 
 	public String getMarca() {
-		if (marca == null) {
-			throw new NullPointerException("ERROR: La marca puede ser nulo.");
-		}
+		
 		return marca;
 	}
 

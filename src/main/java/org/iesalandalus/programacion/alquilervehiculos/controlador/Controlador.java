@@ -28,7 +28,7 @@ public class Controlador {
 		vista.setControlador(this);
 	}
 
-	public void comenzar() {
+	public void comenzar() throws OperationNotSupportedException {
 		modelo.comenzar();
 		vista.comenzar();
 	}
@@ -65,11 +65,17 @@ public class Controlador {
 	public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
 		modelo.modificar(cliente, nombre, telefono);
 	}
-
-	public void devolver(Alquiler alquiler, LocalDate fechaDevolucion) throws OperationNotSupportedException {
-		modelo.devolver(alquiler, fechaDevolucion);
+	
+	
+	
+	public void devolver(Cliente cliente, LocalDate fechaDevolucion) throws OperationNotSupportedException {
+		modelo.devolver(cliente, fechaDevolucion);
 	}
 
+	public void devolver(Vehiculo vehiculo, LocalDate fechaDevolucion) throws OperationNotSupportedException {
+		modelo.devolver(vehiculo, fechaDevolucion);
+	}
+	
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
 		modelo.borrar(cliente);
 	}

@@ -1,28 +1,42 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista.texto;
 
+import java.time.Month;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
 public class VistaTexto extends Vista {
 
 	public void comenzar() {
-		Accion opcionTemp;
+		Accion opcionTemp = null;
 		Consola.mostrarCabecera("Bienvenido al gestor de alquiler de vehículos.");
+
 		do {
 			Consola.mostrarMenuAcciones();
-			opcionTemp = Consola.elegirAccion();
-			ejecutar(opcionTemp);
+			try {
+				opcionTemp = Consola.elegirAccion();
+				ejecutar(opcionTemp);
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+
 		} while (opcionTemp != Accion.SALIR);
 		terminar();
+		
+
 	}
 
 	public void terminar() {
@@ -53,8 +67,11 @@ public class VistaTexto extends Vista {
 		case MODIFICAR_CLIENTE:
 			modificarCliente();
 			break;
-		case DEVOLVER_ALQUILER:
-			devolverAlquiler();
+		case DEVOLVER_ALQUILER_CLIENTE:
+			devolverAlquilerCliente();
+			break;
+		case DEVOLVER_ALQUILER_VEHICULO:
+			devolverAlquilerVehiculo();
 			break;
 		case BORRAR_CLIENTE:
 			borrarCliente();
@@ -80,6 +97,9 @@ public class VistaTexto extends Vista {
 		case LISTAR_ALQUILERES_VEHICULO:
 			listarAlquileresVehiculo();
 			break;
+		case MOSTRAR_ESTADISTICAS_MENSUALES:
+			MostrarEstadisticasMensualesTipoVehiculo();
+			break;
 		default:
 			break;
 		}
@@ -101,7 +121,7 @@ public class VistaTexto extends Vista {
 	}
 
 	protected void insertarVehiculo() {
-		Consola.mostrarCabecera("Eligió insertar un turismo.");
+		Consola.mostrarCabecera("Eligió insertar un vehículo.");
 		try {
 			controlador.insertar(Consola.leerVehiculo());
 		} catch (OperationNotSupportedException e) {
@@ -132,13 +152,14 @@ public class VistaTexto extends Vista {
 
 	protected void buscarCliente() {
 		Consola.mostrarCabecera("Eligió buscar un cliente.");
+		Cliente pepito = Consola.leerClienteDni();
 		try {
-			Cliente clienteMostrar = controlador.buscar(Consola.leerClienteDni());
-			if (clienteMostrar == null) {
+			if (controlador.buscar(pepito) == null) {
 				System.out.println("El cliente no se encuentra en la base de datos.");
 			} else {
-				System.out.println("Los datos del cliente son: " + clienteMostrar);
+				System.out.println("Los datos del cliente son: " + pepito);
 			}
+
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
@@ -198,10 +219,26 @@ public class VistaTexto extends Vista {
 		System.out.println("__________________________________:");
 	}
 
-	protected void devolverAlquiler() {
-		Consola.mostrarCabecera("Eligió modificar un alquiler.");
+	protected void devolverAlquilerCliente() {
+		Consola.mostrarCabecera("Eligió modificar un alquiler usando cliente.");
 		try {
-			controlador.devolver(controlador.buscar(Consola.leerAlquiler()), Consola.leerFechaDevolucion());
+			controlador.devolver(controlador.buscar(Consola.leerClienteDni()), Consola.leerFechaDevolucion());
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		} catch (NullPointerException e) {
+			System.out.println(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		} catch (DateTimeParseException e) {
+			System.out.println("La fecha no es así.");
+		}
+		System.out.println("__________________________________:");
+	}
+
+	protected void devolverAlquilerVehiculo() {
+		Consola.mostrarCabecera("Eligió modificar un alquiler usando cliente.");
+		try {
+			controlador.devolver(controlador.buscar(Consola.leerClienteDni()), Consola.leerFechaDevolucion());
 		} catch (OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		} catch (NullPointerException e) {
@@ -344,12 +381,13 @@ public class VistaTexto extends Vista {
 
 	protected void listarAlquileresCliente() {
 		Consola.mostrarCabecera("Eligió listar los alquileres de un cliente.");
+		Cliente pedro = Consola.leerClienteDni();
 		try {
-			if (controlador.getAlquileres(Consola.leerClienteDni()).size() != 0) {
-				List<Alquiler> listaAlquilerC = controlador.getAlquileres(Consola.leerClienteDni());
+			if (controlador.getAlquileres(pedro).size() != 0) {
+				List<Alquiler> listaAlquilerC = controlador.getAlquileres(pedro);
 				listaAlquilerC.sort(Comparator.comparing(Alquiler::getFechaAlquiler));
 
-				for (Alquiler alquiler : controlador.getAlquileres(Consola.leerClienteDni())) {
+				for (Alquiler alquiler : controlador.getAlquileres(pedro)) {
 					System.out.println(alquiler);
 				}
 			} else {
@@ -384,4 +422,41 @@ public class VistaTexto extends Vista {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	private Map<TipoVehiculo, Integer> inicializarEstadisticas() {
+		Map<TipoVehiculo, Integer> estadisticas = new EnumMap<>(TipoVehiculo.class);
+		estadisticas.put(TipoVehiculo.AUTOBUS, 0);
+		estadisticas.put(TipoVehiculo.FURGONETA, 0);
+		estadisticas.put(TipoVehiculo.TURISMO, 0);
+
+		return estadisticas;
+
+	}
+
+	public void MostrarEstadisticasMensualesTipoVehiculo() {
+		Map<TipoVehiculo, Integer> estadisticasAMostrar = inicializarEstadisticas();
+		Consola.mostrarCabecera("Eligió mostrar las estadísticas mensuales por vehículos:");
+		Month mes = Consola.leerMes().getMonth();
+		int turismo = 0;
+		int autobus = 0;
+		int furgoneta = 0;
+		for (Alquiler alquiler : controlador.getAlquileres()) {
+			if (alquiler.getFechaAlquiler().getMonth().equals(mes)) {
+				if (alquiler.getVehiculo() instanceof Autobus) {
+					autobus++;
+				}
+				if (alquiler.getVehiculo() instanceof Turismo) {
+					turismo++;
+				}
+				if (alquiler.getVehiculo() instanceof Furgoneta) {
+					furgoneta++;
+				}
+			}
+		}
+		estadisticasAMostrar.put(TipoVehiculo.AUTOBUS, autobus);
+		estadisticasAMostrar.put(TipoVehiculo.TURISMO, turismo);
+		estadisticasAMostrar.put(TipoVehiculo.FURGONETA, furgoneta);
+		System.out.println(estadisticasAMostrar);
+	}
+
 }

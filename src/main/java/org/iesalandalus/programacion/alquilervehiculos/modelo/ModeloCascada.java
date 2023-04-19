@@ -9,18 +9,12 @@ import javax.naming.OperationNotSupportedException;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IFuenteDatos;
 
-public class ModeloCascada extends Modelo{
+public class ModeloCascada extends Modelo {
 
-	public ModeloCascada(IFuenteDatos fuenteDatos) {
-		if (fuenteDatos == null) {
-			throw new NullPointerException("ERROR: La fuente está nula.");
-		} else {
-			this.fuenteDatos = fuenteDatos;
-		}
+	public ModeloCascada(FactoriaFuenteDatos factoriaFuenteDatos) {
+		super(factoriaFuenteDatos);
 	}
-
 
 	public void insertar(Cliente cliente) throws OperationNotSupportedException {
 		Cliente clienteTemporal = new Cliente(cliente);
@@ -50,25 +44,40 @@ public class ModeloCascada extends Modelo{
 	}
 
 	public Cliente buscar(Cliente cliente) {
-		Cliente clienteBuscado = new Cliente(clientes.buscar(cliente));
-		return clienteBuscado;
+		if (clientes.buscar(cliente) == null) {
+			return null;
+		} else {
+			Cliente clienteBuscado = new Cliente(clientes.buscar(cliente));
+			return clienteBuscado;
+		}
+
 	}
 
 	public Vehiculo buscar(Vehiculo vehiculo) {
-		Vehiculo vehiculoBuscado = Vehiculo.copiar(vehiculos.buscar(vehiculo)); // mmmmmh
-		return vehiculoBuscado;
+		if (vehiculos.buscar(vehiculo) == null) {
+			return null;
+		} else {
+			Vehiculo vehiculoBuscado = Vehiculo.copiar(vehiculos.buscar(vehiculo)); // mmmmmh
+			return vehiculoBuscado;
+		}
+
 	}
 
 	public Alquiler buscar(Alquiler alquiler) {
-		Alquiler alquilerBuscado = new Alquiler(alquileres.buscar(alquiler));
-		return alquilerBuscado;
+		if (alquileres.buscar(alquiler) == null) {
+			return null;
+		} else {
+			Alquiler alquilerBuscado = new Alquiler(alquileres.buscar(alquiler));
+			return alquilerBuscado;
+		}
+
 	}
 
 	public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
 		this.clientes.modificar(cliente, nombre, telefono);
 	}
 
-	public void devolver(Alquiler alquiler, LocalDate fechadevolucion) throws OperationNotSupportedException {
+	/*public void devolver(Alquiler alquiler, LocalDate fechadevolucion) throws OperationNotSupportedException {
 		if (alquiler == null) {
 			throw new NullPointerException("ERROR: No se puede realizar un alquiler nulo.");
 		}
@@ -79,6 +88,26 @@ public class ModeloCascada extends Modelo{
 			throw new OperationNotSupportedException("ERROR: No existe el alquiler a devolver.");
 		} else
 			alquiler.devolver(fechadevolucion);
+	}*/
+	
+	public void devolver(Cliente cliente, LocalDate fechadevolucion) throws OperationNotSupportedException {
+		if (cliente == null) {
+			throw new NullPointerException("ERROR: No se puede realizar un alquiler con cliente nulo.");
+		}
+		if (fechadevolucion == null) {
+			throw new NullPointerException("ERROR: No se puede realizar una devolución nula.");
+		}
+			alquileres.devolver(cliente, fechadevolucion);
+	}
+	
+	public void devolver(Vehiculo vehiculo, LocalDate fechadevolucion) throws OperationNotSupportedException {
+		if (vehiculo == null) {
+			throw new NullPointerException("ERROR: No se puede realizar un alquiler nulo.");
+		}
+		if (fechadevolucion == null) {
+			throw new NullPointerException("ERROR: No se puede realizar una devolución nula.");
+		}
+			alquileres.devolver(vehiculo,fechadevolucion);
 	}
 
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {

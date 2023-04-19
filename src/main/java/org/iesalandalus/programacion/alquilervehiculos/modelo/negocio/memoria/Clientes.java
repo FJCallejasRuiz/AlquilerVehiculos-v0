@@ -11,10 +11,12 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
 public class Clientes implements IClientes {
 	List<Cliente> coleccionClientes;
 
+
 	public Clientes() {
 		coleccionClientes = new ArrayList<Cliente>();
 	}
 
+	
 	@Override
 	public List<Cliente> get() {
 

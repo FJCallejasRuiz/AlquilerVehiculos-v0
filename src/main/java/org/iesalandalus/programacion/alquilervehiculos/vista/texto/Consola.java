@@ -33,30 +33,17 @@ public class Consola {
 		System.out.println("------------------------");
 		System.out.println("Las opciones son: ");
 		System.out.println("------------------------");
-		System.out.println("1. Salir.");
+		int contador = 0;
+		for (Accion accion : Accion.values()) {
+
+			System.out.println(accion.ordinal() + 1 + " " + accion.toString());
+			contador++;
+			if (contador == 1 || contador == 4 || contador == 7 || contador == 9 || contador == 12 || contador == 15) {
+				System.out.println("------------------------");
+			}
+		}
 		System.out.println("------------------------");
-		System.out.println("2. Insertar un cliente.");
-		System.out.println("3. Insertar un vehículo.");
-		System.out.println("4. Insertar un alquiler.");
-		System.out.println("------------------------");
-		System.out.println("5. Buscar un cliente.");
-		System.out.println("6. Buscar un vehículo.");
-		System.out.println("7  Buscar un alquiler.");
-		System.out.println("------------------------");
-		System.out.println("8. Modificar un cliente.");
-		System.out.println("9. Devolver un alquiler.");
-		System.out.println("------------------------");
-		System.out.println("10. Borrar un cliente.");
-		System.out.println("11. Borrar un vehículo.");
-		System.out.println("12. Borrar un alquiler.");
-		System.out.println("------------------------");
-		System.out.println("13  Listar los clientes.");
-		System.out.println("14. Listar los vehículos.");
-		System.out.println("15. Listar los alquileres.");
-		System.out.println("------------------------");
-		System.out.println("16. Listar los alquileres de un cliente.");
-		System.out.println("17  Listar los alquileres de un vehículo.");
-		System.out.println("------------------------");
+
 	}
 
 	private static String leerCadena(String mensaje) {
@@ -85,7 +72,7 @@ public class Consola {
 		String mensaje = "Introduzca el número de la opción";
 
 		int opcionInt = leerEntero(mensaje);
-		while (opcionInt < 1 || opcionInt > 17) {
+		while (opcionInt < 1 || opcionInt > 19) {
 			System.out.println("Ese número no es posible, por favor inténtelo de nuevo.");
 			opcionInt = leerEntero(mensaje);
 		}
@@ -118,15 +105,17 @@ public class Consola {
 		String telefonoFormado = leerCadena(telefono);
 		return telefonoFormado;
 	}
+
 	public static Vehiculo leerVehiculo() {
 		mostrarMenuTiposVehiculos();
 		return leerVehiculo(elegirTipoVehiculo());
 	}
+
 	private static void mostrarMenuTiposVehiculos() {
 		System.out.println("Los tipos de vehículos son: ");
-		System.out.println("1.- " + TipoVehiculo.TURISMO);
-		System.out.println("2.- " + TipoVehiculo.AUTOBUS);
-		System.out.println("3.- " + TipoVehiculo.FURGONETA);
+		for (TipoVehiculo tipoVehiculo : TipoVehiculo.values()) {
+			System.out.println(tipoVehiculo.ordinal() + 1 + " " + tipoVehiculo.toString());
+		}
 	}
 
 	private static TipoVehiculo elegirTipoVehiculo() {
@@ -198,16 +187,44 @@ public class Consola {
 		LocalDate fechaFormada = leerFecha(fecha);
 		return fechaFormada;
 	}
-	
+
 	public static LocalDate leerMes() {
-		LocalDate ahora = LocalDate.now();
 		System.out.println("Introduzca el mes del 1 al 12.");
 		int fechaALeer;
 		do {
 			fechaALeer = Entrada.entero();
-		} while (fechaALeer<1 || fechaALeer>12);
-		return ahora;
-		//Se que no tiene sentido este método pero como desconozco que pide exactamente y dijiste que es para la proxima tarea.
-		//Así que lo dejo a medias para corregirlo en la siguiente tarea ya que no hace falta para esta.
+		} while (fechaALeer < 1 || fechaALeer > 12);
+		switch (fechaALeer) {
+		case 1:
+			return LocalDate.of(1, 1, 23);
+		case 2:
+			return LocalDate.of(1, 2, 23);
+		case 3:
+			return LocalDate.of(1, 3, 23);
+		case 4:
+			return LocalDate.of(1, 4, 23);
+		case 5:
+			return LocalDate.of(1, 5, 23);
+		case 6:
+			return LocalDate.of(1, 6, 23);
+		case 7:
+			return LocalDate.of(1, 7, 23);
+		case 8:
+			return LocalDate.of(1, 8, 23);
+		case 9:
+			return LocalDate.of(1, 9, 23);
+		case 10:
+			return LocalDate.of(1, 10, 23);
+		case 11:
+			return LocalDate.of(1, 11, 23);
+		case 12:
+			return LocalDate.of(1, 12, 23);
+		default:
+			return null;
+		}
+		// Se que no tiene sentido este método pero como desconozco que pide exactamente
+		// y dijiste que es para la proxima tarea.
+		// Así que lo dejo a medias para corregirlo en la siguiente tarea ya que no hace
+		// falta para esta.
 	}
 }

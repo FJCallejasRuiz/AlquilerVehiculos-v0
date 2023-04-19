@@ -27,21 +27,29 @@ public abstract class Modelo {
 		}
 	}
 
-	public void comenzar() {
+	protected Modelo(FactoriaFuenteDatos factoriaFuenteDatos) {
+		if (factoriaFuenteDatos == null) {
+			throw new NullPointerException("ERROR: La factoria es nula.");
+		}
+		fuenteDatos =factoriaFuenteDatos.crear();
+	}
+
+	public void comenzar() throws OperationNotSupportedException {
 		clientes = fuenteDatos.crearClientes();
-		alquileres = fuenteDatos.crearAlquileres();
 		vehiculos = fuenteDatos.crearVehiculos();
+		alquileres = fuenteDatos.crearAlquileres();
 	}
 
 	public void terminar() {
 		System.out.println("El modelo ha terminado.");
+		
 	}
 
-	public abstract void insertar(Cliente cliente)  throws OperationNotSupportedException ;
+	public abstract void insertar(Cliente cliente) throws OperationNotSupportedException;
 
-	public abstract void insertar(Vehiculo vehiculo)  throws OperationNotSupportedException ;
+	public abstract void insertar(Vehiculo vehiculo) throws OperationNotSupportedException;
 
-	public abstract void insertar(Alquiler alquiler)  throws OperationNotSupportedException ;
+	public abstract void insertar(Alquiler alquiler) throws OperationNotSupportedException;
 
 	public abstract Cliente buscar(Cliente cliente);
 
@@ -49,11 +57,14 @@ public abstract class Modelo {
 
 	public abstract Alquiler buscar(Alquiler alquiler);
 
-	public abstract void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException;
+	public abstract void modificar(Cliente cliente, String nombre, String telefono)
+			throws OperationNotSupportedException;
 
-	public abstract void devolver(Alquiler alquiler, LocalDate fechadevolucion) throws OperationNotSupportedException;
+	public abstract void devolver(Cliente cliente, LocalDate fechadevolucion) throws OperationNotSupportedException;
 
-	public abstract void borrar(Cliente cliente)  throws OperationNotSupportedException;
+	public abstract void devolver(Vehiculo vehiculo, LocalDate fechadevolucion) throws OperationNotSupportedException;
+
+	public abstract void borrar(Cliente cliente) throws OperationNotSupportedException;
 
 	public abstract void borrar(Vehiculo vehiculo) throws OperationNotSupportedException;
 
